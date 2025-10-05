@@ -58,10 +58,10 @@ export default function FeaturesPage({ onBack }) {
 
         <div className="feature-card">
           <div className="feature-icon">🗣️</div>
-          <h3>Personalized AI Assistant</h3>
-          <p>Voice & chat stylist — coming soon.</p>
+          <h3>Voice Stylist</h3>
+          <p>Chat with a voice-enabled stylist (Gemini + ElevenLabs).</p>
           <div style={{ marginTop: 12 }}>
-            <button className="btn-secondary" onClick={() => setShowComingSoon(true)}>Coming Soon</button>
+            <button className="btn-primary" onClick={() => window.open('http://localhost:5173?mode=voice', '_blank')}>Try</button>
           </div>
         </div>
       </div>

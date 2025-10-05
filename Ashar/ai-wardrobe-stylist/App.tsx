@@ -4,6 +4,7 @@ import ImageUploader from './components/ImageUploader';
 import Wardrobe from './components/Wardrobe';
 import OutfitGenerator from './components/OutfitGenerator';
 import OutfitSuggestions from './components/OutfitSuggestions';
+import VoiceStylist from './components/VoiceStylist';
 import { AlertIcon } from './components/icons';
 import { categorizeClothingItems, generateOutfits } from './services/geminiService';
 import type { ClothingItem, OutfitCriteria, OutfitSuggestion, DisplayOutfit } from './types';
@@ -23,6 +24,15 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isWaitingForData, setIsWaitingForData] = useState(true);
+  const [showVoiceStylist, setShowVoiceStylist] = useState(false);
+
+  // Check URL params on mount - auto-show Voice Stylist if ?mode=voice
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'voice') {
+      setShowVoiceStylist(true);
+    }
+  }, []);
 
   // Load images from localStorage on mount
   useEffect(() => {
@@ -248,9 +258,33 @@ function App() {
         {/* Only show ImageUploader if not waiting and wardrobe is empty */}
         {!isWaitingForData && wardrobe.length === 0 && <ImageUploader onUpload={handleImageUpload} isCategorizing={isCategorizing} />}
         
-        <Wardrobe items={wardrobe} />
-        <OutfitGenerator onGenerate={handleGenerateOutfits} isGenerating={isGenerating} hasWardrobe={wardrobe.length > 0} />
-        <OutfitSuggestions outfits={outfits} />
+        {showVoiceStylist ? (
+          <div>
+            <button
+              onClick={() => setShowVoiceStylist(false)}
+              className="mb-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
+              ← Back to Wardrobe
+            </button>
+            <VoiceStylist wardrobe={wardrobe} />
+          </div>
+        ) : (
+          <>
+            <Wardrobe items={wardrobe} />
+            {wardrobe.length > 0 && (
+              <div className="text-center my-8">
+                <button
+                  onClick={() => setShowVoiceStylist(true)}
+                  className="px-8 py-4 bg-gradient-to-r from-[#ff3cac] to-[#00f5d4] text-white font-bold text-lg rounded-lg hover:opacity-90 shadow-lg"
+                >
+                  🎤 Try Voice Stylist
+                </button>
+              </div>
+            )}
+            <OutfitGenerator onGenerate={handleGenerateOutfits} isGenerating={isGenerating} hasWardrobe={wardrobe.length > 0} />
+            <OutfitSuggestions outfits={outfits} />
+          </>
+        )}
       </main>
     </div>
   );
