@@ -346,6 +346,47 @@ app.get('/api/get-generated-photo', async (req, res) => {
   }
 });
 
+// API endpoint to get storage statistics
+app.get('/api/storage-stats', async (req, res) => {
+  try {
+    const stats = {
+      wardrobeSessions: 0,
+      personalPhotos: 0,
+      recommendations: 0
+    };
+    
+    // Count wardrobe sessions
+    try {
+      const wardrobeContents = await fs.readdir(WARDROBE_DIR);
+      stats.wardrobeSessions = wardrobeContents.filter(item => item.startsWith('session_')).length;
+    } catch {
+      // Directory doesn't exist yet
+    }
+    
+    // Count personal photos
+    try {
+      const personalContents = await fs.readdir(PERSONAL_PHOTOS_DIR);
+      stats.personalPhotos = personalContents.filter(item => item.startsWith('personal_photo')).length;
+    } catch {
+      // Directory doesn't exist yet
+    }
+    
+    // Count recommendations
+    try {
+      const recommendationContents = await fs.readdir(GEMINI_RECOMMENDATIONS_DIR);
+      // Check if the 'recommendations' folder exists
+      stats.recommendations = recommendationContents.includes('recommendations') ? 1 : 0;
+    } catch {
+      // Directory doesn't exist yet
+    }
+    
+    res.json(stats);
+  } catch (error) {
+    console.error('❌ Error getting storage stats:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Health check endpoint
 app.get('/api/health', (req, res) => {
   res.json({ status: 'File storage service is running' });
