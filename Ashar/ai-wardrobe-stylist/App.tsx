@@ -5,8 +5,17 @@ import DualImageUploader from './components/DualImageUploader';
 import Wardrobe from './components/Wardrobe';
 import OutfitGenerator from './components/OutfitGenerator';
 import OutfitSuggestions from './components/OutfitSuggestions';
+import StorageStatus from './components/StorageStatus';
+import GeneratedPhotos from './components/GeneratedPhotos';
+import SuccessNotification from './components/SuccessNotification';
 import { AlertIcon } from './components/icons';
 import { categorizeClothingItems, generateOutfits } from './services/geminiService';
+import { 
+  saveWardrobePhotos, 
+  savePersonalPhoto, 
+  saveOutfitRecommendation,
+  updateStorageStats
+} from './services/fileStorageService';
 import type { ClothingItem, OutfitCriteria, OutfitSuggestion, DisplayOutfit } from './types';
 
 const fileToBase64 = (file: File): Promise<string> =>
@@ -25,6 +34,9 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isWaitingForData, setIsWaitingForData] = useState(true);
   const [personalPhoto, setPersonalPhoto] = useState<string | null>(null);
+  const [hasGeneratedPhotos, setHasGeneratedPhotos] = useState(false);
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   // Load images from localStorage on mount
   useEffect(() => {
@@ -70,12 +82,21 @@ function App() {
               category: item.category,
               description: item.description,
             }));
-            
-            setWardrobe(newItems);
-            console.log('✅ Wardrobe loaded with', newItems.length, 'items');
-            
-            // Clear the flag so we don't reload on refresh
-            localStorage.removeItem('wardrobeReady');
+               setWardrobe(newItems);
+          console.log('✅ Wardrobe loaded with', newItems.length, 'items');
+          
+          // Save wardrobe photos to file system
+          try {
+            await saveWardrobePhotos(newItems);
+            updateStorageStats('wardrobe');
+            console.log('✅ Wardrobe photos saved to gemini_recommendation folder');
+          } catch (saveError) {
+            console.error('⚠️ Failed to save wardrobe photos:', saveError);
+            // Don't throw error, just log it - the app should continue working
+          }
+          
+          // Clear the flag so we don't reload on refresh
+          localStorage.removeItem('wardrobeReady');
           }
         } catch (err: any) {
           console.error('❌ Error loading wardrobe from storage:', err);
@@ -139,6 +160,16 @@ function App() {
           setIsWaitingForData(false);
           console.log('✅ Wardrobe loaded with', newItems.length, 'items from postMessage');
 
+          // Save wardrobe photos to file system
+          try {
+            await saveWardrobePhotos(newItems);
+            updateStorageStats('wardrobe');
+            console.log('✅ Wardrobe photos saved to gemini_recommendation folder');
+          } catch (saveError) {
+            console.error('⚠️ Failed to save wardrobe photos:', saveError);
+            // Don't throw error, just log it - the app should continue working
+          }
+
         } catch (err: any) {
           console.error('❌ Error processing wardrobe from postMessage:', err);
           setError(err.message || 'Failed to process wardrobe data.');
@@ -186,7 +217,21 @@ function App() {
         description: item.description,
       }));
       
-      setWardrobe(prev => [...prev, ...newItems]);
+      setWardrobe(prev => {
+        const updatedWardrobe = [...prev, ...newItems];
+        
+        // Save wardrobe photos to file system (async, don't wait)
+        saveWardrobePhotos(updatedWardrobe)
+          .then(() => {
+            updateStorageStats('wardrobe');
+            console.log('✅ Wardrobe photos saved to gemini_recommendation folder');
+          })
+          .catch((saveError) => {
+            console.error('⚠️ Failed to save wardrobe photos:', saveError);
+          });
+        
+        return updatedWardrobe;
+      });
 
     } catch (err: any) {
       setError(err.message || 'An unknown error occurred during categorization.');
@@ -220,6 +265,16 @@ function App() {
 
       setOutfits([displayOutfit]);
 
+      // Save outfit recommendation to file system
+      try {
+        await saveOutfitRecommendation(suggestion, wardrobe, criteria, personalPhoto);
+        updateStorageStats('recommendation');
+        console.log('✅ Outfit recommendation saved (only recommendations cleared)');
+      } catch (saveError) {
+        console.error('⚠️ Failed to save outfit recommendation:', saveError);
+        // Don't throw error, just log it - the app should continue working
+      }
+
     } catch (err: any) {
       setError(err.message || 'An unknown error occurred during outfit generation.');
     } finally {
@@ -236,12 +291,65 @@ function App() {
       
       // Store in localStorage for persistence
       localStorage.setItem('personalPhoto', photoUrl);
-      console.log('✅ Personal photo saved');
+      console.log('✅ Personal photo saved to localStorage');
+      
+      // Save personal photo to file system
+      try {
+        await savePersonalPhoto(photoUrl, file.type);
+        updateStorageStats('personal');
+        console.log('✅ Personal photo saved to gemini_recommendation folder');
+      } catch (saveError) {
+        console.error('⚠️ Failed to save personal photo to file system:', saveError);
+        // Don't throw error, just log it - the app should continue working
+      }
     } catch (error) {
-      console.error('❌ Error saving personal photo:', error);
+      console.error('❌ Error processing personal photo:', error);
       setError('Failed to save personal photo. Please try again.');
     }
   }, []);
+
+  // Handle generating outfit with personal photo
+  const handleGenerateOutfitWithPhoto = useCallback(async (outfit: DisplayOutfit) => {
+    if (!personalPhoto) {
+      setError("Please upload a personal photo first.");
+      return;
+    }
+
+    try {
+      console.log('🎨 Generating realistic outfit photo...');
+      
+      // Create a mock OutfitSuggestion from DisplayOutfit for the backend
+      const suggestion: OutfitSuggestion = {
+        name: outfit.name,
+        justification: outfit.justification,
+        itemDescriptions: outfit.items.map(item => item.description)
+      };
+      
+      // Create default criteria for photo generation
+      const criteria = {
+        event: 'general',
+        weather: 'mild',
+        mood: 'confident'
+      };
+      
+      // Save outfit recommendation with photo generation
+      await saveOutfitRecommendation(suggestion, wardrobe, criteria, personalPhoto);
+      updateStorageStats('recommendation');
+      console.log('✅ Realistic outfit photo generated and saved!');
+      
+      // Show success and update state
+      setError(null);
+      setHasGeneratedPhotos(true);
+      
+      // Show success notification
+      setSuccessMessage("Your realistic outfit photo has been generated! Check the saved_data/gemini_recommendation folder to view your AI-generated images.");
+      setShowSuccessNotification(true);
+      
+    } catch (err: any) {
+      console.error('❌ Error generating outfit photo:', err);
+      setError(`Failed to generate outfit photo: ${err.message}`);
+    }
+  }, [personalPhoto, wardrobe]);
 
   return (
     <div className="min-h-screen bg-[#0b0f1a]">
@@ -299,8 +407,26 @@ function App() {
         )}
         
         <OutfitGenerator onGenerate={handleGenerateOutfits} isGenerating={isGenerating} hasWardrobe={wardrobe.length > 0} />
-        <OutfitSuggestions outfits={outfits} />
+        <OutfitSuggestions 
+          outfits={outfits} 
+          personalPhoto={personalPhoto}
+          onGenerateWithPhoto={handleGenerateOutfitWithPhoto}
+        />
+        
+        {/* Show generated photos when available */}
+        {hasGeneratedPhotos && <GeneratedPhotos />}
       </main>
+      
+      {/* Storage Status Component */}
+      <StorageStatus />
+      
+      {/* Success Notification */}
+      {showSuccessNotification && (
+        <SuccessNotification
+          message={successMessage}
+          onClose={() => setShowSuccessNotification(false)}
+        />
+      )}
     </div>
   );
 }
