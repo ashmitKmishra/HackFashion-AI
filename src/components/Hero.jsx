@@ -86,9 +86,9 @@ export default function Hero({ onButtonClick }) {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
           Upgrade Your
-          <span className="gradient-text"> Wardrobe</span>
+          <span className="gradient-text"> Fashion</span>
           <br />
-          With <span className="gradient-text">AI</span>
+          Without <span className="gradient-text">Hustle</span>
           </motion.h1>
 
           <motion.div 

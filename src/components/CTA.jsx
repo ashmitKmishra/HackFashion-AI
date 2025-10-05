@@ -17,7 +17,7 @@ export default function CTA({ onButtonClick }) {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Ready to Upgrade Your Style?
+          Never Wonder what to Wear Again
         </motion.h2>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -25,7 +25,7 @@ export default function CTA({ onButtonClick }) {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          Get early access and styling tips — powered by AI voice & vision.
+          Get access and styling tips — powered by AI voice & vision.
         </motion.p>
 
         <motion.button
