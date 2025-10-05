@@ -94,10 +94,11 @@ export const generateOutfits = async (
 
     **Instructions:**
     1.  Select appropriate items from the provided wardrobe list.
-    2.  Provide a creative name for the outfit.
-    3.  Write a brief justification explaining why the outfit works for the user's criteria.
-    4.  The 'itemDescriptions' in your response MUST EXACTLY MATCH the descriptions from the 'Available Wardrobe Items' list. Do not alter them.
-    5.  Return ONLY a valid JSON object. Do not include markdown formatting or any other text.
+    2.  For upperwear (Outerwear category), choose ONLY ONE item. If multiple outerwear options are available (e.g., jacket, hoodie, coat), select the most appropriate one for the weather conditions. For cold weather, prefer jacket over hoodie.
+    3.  Provide a creative name for the outfit.
+    4.  Write a brief justification explaining why the outfit works for the user's criteria.
+    5.  The 'itemDescriptions' in your response MUST EXACTLY MATCH the descriptions from the 'Available Wardrobe Items' list. Do not alter them.
+    6.  Return ONLY a valid JSON object. Do not include markdown formatting or any other text.
     `;
     
     const response = await ai.models.generateContent({
