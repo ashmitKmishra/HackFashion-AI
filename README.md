@@ -32,6 +32,21 @@ Repository structure
 - `server/` — simple server scaffold (uploads, future API)
 
 How to run locally
+
+### Quick Start (Recommended)
+Use the `start-all.sh` script to automatically install dependencies and run both applications:
+
+```bash
+./start-all.sh
+```
+
+This script will:
+- Install dependencies for both the main app and AI Wardrobe Stylist
+- Start the main app (usually on http://localhost:3000 or 3001)
+- Start the AI Wardrobe Stylist (on http://localhost:5173)
+- Press `Ctrl+C` to stop both servers
+
+### Manual Setup
 1. Install Node.js (v18+) and npm.
 2. If project is on macOS Desktop and you get an EPERM uv_cwd error, either:
    - Grant Terminal access to Desktop: System Settings → Privacy & Security → Files and Folders → allow "Terminal", or
@@ -45,14 +60,15 @@ Open the printed local URL (usually http://localhost:{port_number}).
 
 Running the wardrobe classifier locally
 - The wardrobe classifier app lives in `Ashar/ai-wardrobe-stylist` and must be started separately for the iframe integration to work during development.
-- From the repo root open a second terminal and run:
+- **Note:** The `start-all.sh` script automatically handles this. If running manually, open a second terminal and run:
 ```bash
 cd Ashar/ai-wardrobe-stylist
 npm install
 npm run dev
 # This typically serves on http://localhost:5173
 ```
- - Make sure `Ashar/ai-wardrobe-stylist/.env.local` contains `VITE_GEMINI_API_KEY` or `GEMINI_API_KEY` as required by that app's Vite config (the app maps the env key to `process.env.API_KEY` in the client bundle).
+ - Make sure `Ashar/ai-wardrobe-stylist/.env` contains `GEMINI_API_KEY` as required by that app's Vite config (the app maps the env key to `process.env.API_KEY` in the client bundle).
+ - See `Ashar/ai-wardrobe-stylist/.env.example` for the required format.
 
 Replacing the iframe with a production URL
  - In `src/components/FeaturesPage.jsx` and `src/components/FeaturesLauncher.jsx` the iframe default URL is `http://localhost:5173`. Replace that string with your production URL (for example, `https://ai-wardrobe.example.com`) when you deploy the wardrobe classifier app.
