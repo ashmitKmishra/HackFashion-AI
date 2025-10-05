@@ -44,7 +44,7 @@ export default function Header() {
           transition={{ duration: 0.2 }}
         >
           <span className="logo-text">
-            Hack<span className="gradient-text">Fashion</span>
+            Hack<span className="gradient-text">Fashion-AI</span>
           </span>
         </motion.div>
 
