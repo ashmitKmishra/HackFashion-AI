@@ -151,14 +151,16 @@ export default function Hero({ onButtonClick }) {
             >
             {isAuthenticated ? 'Try the Preview' : 'Try the Preview'}
             </motion.button>
-            <motion.button 
-              className="btn-secondary"
-              onClick={onButtonClick}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-            See Features
-            </motion.button>
+            {!isAuthenticated && (
+              <motion.button 
+                className="btn-secondary"
+                onClick={scrollToFeatures}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+              See Features
+              </motion.button>
+            )}
           </motion.div>
         </animated.div>
 

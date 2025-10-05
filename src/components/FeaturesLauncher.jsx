@@ -15,7 +15,7 @@ export default function FeaturesLauncher() {
 
   const openWardrobe = () => {
     // Open classifier in new tab
-    window.open('http://localhost:5175', '_blank')
+    window.open('http://localhost:5173', '_blank')
   }
 
   return (
