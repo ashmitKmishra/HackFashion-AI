@@ -1,5 +1,5 @@
 # HackFashion-AI
-
+WEBSITE LINK: https://hackfashionai.netlify.app/
 HackFashion-AI is an AI-first wardrobe manager and stylist. This repo currently contains the single-page marketing/welcome site and a UI scaffold for the future core app (image uploads, outfit generation, and conversational styling). The site is designed with a Gen‑Z aesthetic and includes animated preview components to illustrate core product ideas.
 
 What the app will do
