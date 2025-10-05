@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function ComingSoon({ onBack }) {
+  const { loginWithRedirect } = useAuth0()
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import Header from './components/Header'
 import Hero from './components/Hero'
 import Features from './components/Features'
 import Benefits from './components/Benefits'
@@ -19,11 +20,17 @@ export default function App() {
   }
 
   if (showComingSoon) {
-    return <ComingSoon onBack={handleBack} />
+    return (
+      <>
+        <Header />
+        <ComingSoon onBack={handleBack} />
+      </>
+    )
   }
 
   return (
     <div className="app-container">
+      <Header />
       <Hero onButtonClick={handleButtonClick} />
       <Features />
       <Benefits />
