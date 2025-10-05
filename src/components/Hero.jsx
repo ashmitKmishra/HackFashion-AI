@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence, useAnimation } from 'framer-motion'
 import { useSpring, animated } from '@react-spring/web'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function Hero({ onButtonClick }) {
+  const { loginWithRedirect } = useAuth0()
   const [springs, api] = useSpring(() => ({
     from: { y: -50, opacity: 0 },
     to: { y: 0, opacity: 1 },
@@ -120,7 +122,11 @@ export default function Hero({ onButtonClick }) {
           >
             <motion.button 
               className="btn-primary"
-              onClick={onButtonClick}
+              onClick={() => loginWithRedirect({ 
+                authorizationParams: {
+                  screen_hint: "signup",
+                }
+              })}
               whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(6, 182, 212, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >

@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import Header from './components/Header'
 import Hero from './components/Hero'
 import FeaturesLauncher from './components/FeaturesLauncher'
 import FeaturesPage from './components/FeaturesPage'
@@ -23,7 +24,12 @@ export default function App() {
   }
 
   if (showComingSoon) {
-    return <ComingSoon onBack={handleBack} />
+    return (
+      <>
+        <Header />
+        <ComingSoon onBack={handleBack} />
+      </>
+    )
   }
 
   if (showFeaturesPage) {

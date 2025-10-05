@@ -1,7 +1,9 @@
 import React from 'react'
 import { motion } from 'framer-motion'
+import { useAuth0 } from '@auth0/auth0-react'
 
 export default function CTA({ onButtonClick }) {
+  const { loginWithRedirect } = useAuth0()
   return (
     <section className="cta-section">
       <motion.div 
@@ -30,7 +32,11 @@ export default function CTA({ onButtonClick }) {
 
         <motion.button
           className="cta-button"
-          onClick={onButtonClick}
+          onClick={() => loginWithRedirect({ 
+            authorizationParams: {
+              screen_hint: "signup",
+            }
+          })}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
