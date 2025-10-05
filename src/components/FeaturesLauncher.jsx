@@ -29,6 +29,19 @@ export default function FeaturesLauncher() {
     }
   }
 
+  const openVoiceStylist = () => {
+    if (isAuthenticated) {
+      // Open classifier with voice mode
+      window.open('http://localhost:5173?mode=voice', '_blank')
+    } else {
+      loginWithRedirect({ 
+        authorizationParams: {
+          screen_hint: "signup",
+        }
+      })
+    }
+  }
+
   return (
     <section className="features" ref={ref}>
       <motion.h2 className="section-title" initial={{ opacity: 0, y: 30 }} animate={isInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
@@ -45,9 +58,13 @@ export default function FeaturesLauncher() {
               <div style={{ marginTop: 12 }}>
                 <button className="btn-primary" onClick={openWardrobe}>Get Started</button>
               </div>
+            ) : f.id === 'voice' ? (
+              <div style={{ marginTop: 12 }}>
+                <button className="btn-primary" onClick={openVoiceStylist}>Try</button>
+              </div>
             ) : (
               <div style={{ marginTop: 12 }}>
-                <button className="btn-secondary">Try</button>
+                <button className="btn-secondary">Coming Soon</button>
               </div>
             )}
           </motion.div>

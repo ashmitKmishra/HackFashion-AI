@@ -5,9 +5,7 @@ import DualImageUploader from './components/DualImageUploader';
 import Wardrobe from './components/Wardrobe';
 import OutfitGenerator from './components/OutfitGenerator';
 import OutfitSuggestions from './components/OutfitSuggestions';
-import StorageStatus from './components/StorageStatus';
-import GeneratedPhotos from './components/GeneratedPhotos';
-import SuccessNotification from './components/SuccessNotification';
+import VoiceStylist from './components/VoiceStylist';
 import { AlertIcon } from './components/icons';
 import { categorizeClothingItems, generateOutfits } from './services/geminiService';
 import { 
@@ -33,10 +31,15 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isWaitingForData, setIsWaitingForData] = useState(true);
-  const [personalPhoto, setPersonalPhoto] = useState<string | null>(null);
-  const [hasGeneratedPhotos, setHasGeneratedPhotos] = useState(false);
-  const [showSuccessNotification, setShowSuccessNotification] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
+  const [showVoiceStylist, setShowVoiceStylist] = useState(false);
+
+  // Check URL params on mount - auto-show Voice Stylist if ?mode=voice
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') === 'voice') {
+      setShowVoiceStylist(true);
+    }
+  }, []);
 
   // Load images from localStorage on mount
   useEffect(() => {
@@ -387,34 +390,33 @@ function App() {
           />
         )}
         
-        <Wardrobe items={wardrobe} />
-        
-        {/* Personal Photo Display */}
-        {personalPhoto && (
-          <div className="bg-[#05060a]/80 backdrop-blur-sm p-6 rounded-lg shadow-lg mt-8 border border-[#ff3cac]/20">
-            <h2 className="text-xl font-semibold text-[#f7f8fb] mb-4 flex items-center">
-              <span className="text-2xl mr-2">👤</span>
-              Your Photo
-            </h2>
-            <div className="flex justify-center">
-              <img 
-                src={personalPhoto} 
-                alt="Your personal photo" 
-                className="w-48 h-48 object-cover rounded-lg shadow-lg border border-[#ff3cac]/30" 
-              />
-            </div>
+        {showVoiceStylist ? (
+          <div>
+            <button
+              onClick={() => setShowVoiceStylist(false)}
+              className="mb-4 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600"
+            >
+              ← Back to Wardrobe
+            </button>
+            <VoiceStylist wardrobe={wardrobe} />
           </div>
+        ) : (
+          <>
+            <Wardrobe items={wardrobe} />
+            {wardrobe.length > 0 && (
+              <div className="text-center my-8">
+                <button
+                  onClick={() => setShowVoiceStylist(true)}
+                  className="px-8 py-4 bg-gradient-to-r from-[#ff3cac] to-[#00f5d4] text-white font-bold text-lg rounded-lg hover:opacity-90 shadow-lg"
+                >
+                  🎤 Try Voice Stylist
+                </button>
+              </div>
+            )}
+            <OutfitGenerator onGenerate={handleGenerateOutfits} isGenerating={isGenerating} hasWardrobe={wardrobe.length > 0} />
+            <OutfitSuggestions outfits={outfits} />
+          </>
         )}
-        
-        <OutfitGenerator onGenerate={handleGenerateOutfits} isGenerating={isGenerating} hasWardrobe={wardrobe.length > 0} />
-        <OutfitSuggestions 
-          outfits={outfits} 
-          personalPhoto={personalPhoto}
-          onGenerateWithPhoto={handleGenerateOutfitWithPhoto}
-        />
-        
-        {/* Show generated photos when available */}
-        {hasGeneratedPhotos && <GeneratedPhotos />}
       </main>
       
       {/* Storage Status Component */}
