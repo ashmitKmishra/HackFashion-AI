@@ -3,7 +3,30 @@ import { motion } from 'framer-motion'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function CTA({ onButtonClick }) {
-  const { loginWithRedirect } = useAuth0()
+  const { loginWithRedirect, isAuthenticated } = useAuth0()
+  
+  // Function to scroll to features section
+  const scrollToFeatures = () => {
+    const featuresSection = document.querySelector('.features')
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+  
+  // Handle Get Started button click
+  const handleGetStarted = () => {
+    if (isAuthenticated) {
+      // If logged in, scroll to features
+      scrollToFeatures()
+    } else {
+      // If not logged in, redirect to signup
+      loginWithRedirect({ 
+        authorizationParams: {
+          screen_hint: "signup",
+        }
+      })
+    }
+  }
   return (
     <section className="cta-section">
       <motion.div 
@@ -32,11 +55,7 @@ export default function CTA({ onButtonClick }) {
 
         <motion.button
           className="cta-button"
-          onClick={() => loginWithRedirect({ 
-            authorizationParams: {
-              screen_hint: "signup",
-            }
-          })}
+          onClick={handleGetStarted}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
