@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const baseFeatures = [
   { id: 'wardrobe', title: "Wardrobe Classifier", description: 'Upload photos and auto-classify items (tops, bottoms, outerwear).', color: '#00f5d4' },
@@ -8,14 +9,24 @@ const baseFeatures = [
 ]
 
 export default function FeaturesLauncher() {
+  const { loginWithRedirect, isAuthenticated } = useAuth0()
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-100px' })
   const [iframeOpen, setIframeOpen] = useState(false)
   const [iframeUrl, setIframeUrl] = useState('')
 
   const openWardrobe = () => {
-    // Open classifier in new tab
-    window.open('http://localhost:5173', '_blank')
+    if (isAuthenticated) {
+      // If logged in, open classifier in new tab
+      window.open('http://localhost:5173', '_blank')
+    } else {
+      // If not logged in, redirect to signup
+      loginWithRedirect({ 
+        authorizationParams: {
+          screen_hint: "signup",
+        }
+      })
+    }
   }
 
   return (
