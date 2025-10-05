@@ -103,9 +103,9 @@ export default function Hero({ onButtonClick }) {
                   <p className="hero-sub">Your closet, organized. Your style, amplified. <span className="highlight">Forever</span></p>
 
                   <ul className="features-list" aria-label="features">
-                    <li className="badge">Auto-categorize</li>
-                    <li className="badge">Outfits</li>
-                    <li className="badge">Voice Stylist</li>
+                    <li className="badge">Outfit Checks</li>
+                    <li className="badge">Advance Color Suggestion</li>
+                    <li className="badge">Personalized Stylist</li>
                   </ul>
 
                   <p className="hero-note">Get a personal stylist that knows your closet</p>

@@ -41,7 +41,7 @@ export default function CTA({ onButtonClick }) {
           }}
           whileTap={{ scale: 0.95 }}
         >
-          <span>Get Early Access</span>
+          <span>Get Started</span>
           <motion.span 
             className="arrow"
             animate={{ x: [0, 6, 0] }}

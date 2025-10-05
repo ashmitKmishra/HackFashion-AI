@@ -16,8 +16,8 @@ const features = [
   },
   {
     icon: '🗣️',
-    title: 'Voice Stylist',
-    description: 'Chat or speak with an AI stylist (Gemini + ElevenLabs) to get personalized advice and swaps.',
+    title: 'Personal Stylist',
+    description: 'Chat or speak with a Personalized stylist to get personalized advice and swaps.',
     color: '#ff3cac'
   },
   {
