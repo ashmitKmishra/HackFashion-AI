@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import Header from './components/Header';
 import ImageUploader from './components/ImageUploader';
+import DualImageUploader from './components/DualImageUploader';
 import Wardrobe from './components/Wardrobe';
 import OutfitGenerator from './components/OutfitGenerator';
 import OutfitSuggestions from './components/OutfitSuggestions';
@@ -23,6 +24,7 @@ function App() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isWaitingForData, setIsWaitingForData] = useState(true);
+  const [personalPhoto, setPersonalPhoto] = useState<string | null>(null);
 
   // Load images from localStorage on mount
   useEffect(() => {
@@ -30,6 +32,13 @@ function App() {
       console.log('🔍 Checking localStorage for saved wardrobe...');
       const wardrobeReady = localStorage.getItem('wardrobeReady');
       const savedImages = localStorage.getItem('wardrobeImages');
+      const savedPersonalPhoto = localStorage.getItem('personalPhoto');
+      
+      // Load personal photo if available
+      if (savedPersonalPhoto) {
+        setPersonalPhoto(savedPersonalPhoto);
+        console.log('✅ Personal photo loaded from storage');
+      }
       
       console.log('wardrobeReady:', wardrobeReady);
       console.log('savedImages count:', savedImages ? JSON.parse(savedImages).length : 0);
@@ -218,6 +227,22 @@ function App() {
     }
   }, [wardrobe]);
 
+  // Handle personal photo upload
+  const handlePersonalPhotoUpload = useCallback(async (file: File) => {
+    try {
+      const photoData = await fileToBase64(file);
+      const photoUrl = `data:${file.type};base64,${photoData}`;
+      setPersonalPhoto(photoUrl);
+      
+      // Store in localStorage for persistence
+      localStorage.setItem('personalPhoto', photoUrl);
+      console.log('✅ Personal photo saved');
+    } catch (error) {
+      console.error('❌ Error saving personal photo:', error);
+      setError('Failed to save personal photo. Please try again.');
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#0b0f1a]">
       <Header />
@@ -245,10 +270,34 @@ function App() {
           </div>
         )}
         
-        {/* Only show ImageUploader if not waiting and wardrobe is empty */}
-        {!isWaitingForData && wardrobe.length === 0 && <ImageUploader onUpload={handleImageUpload} isCategorizing={isCategorizing} />}
+        {/* Only show DualImageUploader if not waiting and wardrobe is empty */}
+        {!isWaitingForData && wardrobe.length === 0 && (
+          <DualImageUploader 
+            onWardrobeUpload={handleImageUpload} 
+            onPersonalPhotoUpload={handlePersonalPhotoUpload}
+            isCategorizing={isCategorizing} 
+          />
+        )}
         
         <Wardrobe items={wardrobe} />
+        
+        {/* Personal Photo Display */}
+        {personalPhoto && (
+          <div className="bg-[#05060a]/80 backdrop-blur-sm p-6 rounded-lg shadow-lg mt-8 border border-[#ff3cac]/20">
+            <h2 className="text-xl font-semibold text-[#f7f8fb] mb-4 flex items-center">
+              <span className="text-2xl mr-2">👤</span>
+              Your Photo
+            </h2>
+            <div className="flex justify-center">
+              <img 
+                src={personalPhoto} 
+                alt="Your personal photo" 
+                className="w-48 h-48 object-cover rounded-lg shadow-lg border border-[#ff3cac]/30" 
+              />
+            </div>
+          </div>
+        )}
+        
         <OutfitGenerator onGenerate={handleGenerateOutfits} isGenerating={isGenerating} hasWardrobe={wardrobe.length > 0} />
         <OutfitSuggestions outfits={outfits} />
       </main>
