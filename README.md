@@ -9,67 +9,46 @@ What the app will do
 - Recommend color palettes, fit adjustments and sustainable ways to wear more of what you own
 
 Tech stack (current)
-- Frontend: React 18 + Vite
-- Animations: Framer Motion, react-spring (small helpers)
-- Styling: plain CSS with CSS variables (palette) and responsive rules (Tailwind is optional)
-- Dev tools: Vite (dev server, HMR)
+# HackFashion-AI
 
-Repository layout
+HackFashion-AI is an AI-powered wardrobe manager and stylist. This repository contains the welcome/marketing website and a UI scaffold for the core app we will build: image uploads, outfit generation, and conversational styling.
+
+Overview
+- Auto-categorize wardrobe items from photos (tops, bottoms, outerwear, accessories).
+- Generate outfit combinations tailored to event, weather, mood, height, and body type.
+- Provide conversational/voice styling using language and TTS models (Gemini + ElevenLabs planned).
+
+Tech stack
+- Frontend: React 18 + Vite
+- Animations: Framer Motion + react-spring
+- Styling: CSS variables + responsive rules (Tailwind optional)
+
+Repository structure
 - `index.html` — app entry
 - `src/` — React app
-	- `App.jsx`, `main.jsx` — app shell
-	- `components/` — `Hero`, `Features`, `Benefits`, `CTA`, `ComingSoon`
-	- `hooks/` — small hooks (`useTheme`, `useUploadPreview`)
-- `server/` — small server scaffold (for future uploads / APIs)
+  - `App.jsx`, `main.jsx` — app bootstrap
+  - `components/` — UI components (Hero, Features, Benefits, CTA, ComingSoon)
+  - `hooks/` — small utilities (`useTheme`, `useUploadPreview`)
+- `server/` — simple server scaffold (uploads, future API)
 
 How to run locally
-1. Ensure Node.js (>= 18) and npm are installed.
-2. If your project is on macOS Desktop and you hit permission errors (EPERM uv_cwd), either grant Terminal access to Desktop in:
-	 System Settings → Privacy & Security → Files and Folders → allow "Terminal" access to Desktop
-	 or move the project out of Desktop (example: `mv ~/Desktop/HackFashion-AI ~/Projects/`)
-
-3. From the project root:
+1. Install Node.js (v18+) and npm.
+2. If project is on macOS Desktop and you get an EPERM uv_cwd error, either:
+   - Grant Terminal access to Desktop: System Settings → Privacy & Security → Files and Folders → allow "Terminal", or
+   - Move the project off Desktop: `mv ~/Desktop/HackFashion-AI ~/Projects/`
+3. From the project root run:
 ```bash
 npm install
 npm run dev
 ```
+Open the printed local URL (usually http://localhost:{port_number}).
 
-The dev server (Vite) will start and print a local URL (typically http://localhost:5173). Open that in your browser to preview the site.
+Notes and next steps
+- This front-end is a visual/marketing shell. Core back-end, model pipelines, auth, and storage will be added later.
+- Planned: image upload + storage, Gemini vision/classification, outfit ranking, Gemini chat + ElevenLabs TTS, user auth and wardrobe DB.
 
-Notes & next steps
-- The site is a marketing shell for the product and does not include the full backend or ML pipelines yet.
-- Planned work: image upload pipeline, clothes categorization model, outfit-ranking model, Gemini/ElevenLabs conversational/voice integration, auth, and a user wardrobe DB.
-- If you want Tailwind instead of plain CSS, I can add it (requires installing tailwind packages and minor refactor).
+Contributing
+- Open issues or PRs. Tell me which feature to prioritize (upload flow, mock API, or model integration) and I will scaffold it.
 
-Contact / contributing
-- Open issues or create PRs. If you'd like me to continue building features (upload flow, mock API endpoints, or model integration), tell me which to prioritize and I’ll scaffold it.
-
-## Project Structure
-
-```
-CashHack-Pro/
-├── index.html      # Main HTML file
-├── styles.css      # CSS styles
-├── script.js       # JavaScript functionality
-└── README.md       # Project documentation
-```
-
-## Getting Started
-
-1. Open `index.html` in your web browser
-2. Start building your hackathon project!
-
-## Features
-
-- Responsive design
-- Modern CSS styling
-- Basic JavaScript functionality
-- Clean and minimal structure
-
-## Development
-
-This is a basic boilerplate template. Add your hackathon features and functionality as needed.
-
-## License
-
-This project is created for hackathon purposes.
+License
+- MIT
