@@ -38,8 +38,9 @@ export default function App() {
 
   return (
     <div className="app-container">
-  <Hero onButtonClick={handleButtonClick} />
-  <FeaturesLauncher />
+      <Header />
+      <Hero onButtonClick={handleButtonClick} />
+      <FeaturesLauncher />
       <Benefits />
       <CTA onButtonClick={handleButtonClick} />
     </div>

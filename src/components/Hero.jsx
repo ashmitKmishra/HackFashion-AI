@@ -4,12 +4,35 @@ import { useSpring, animated } from '@react-spring/web'
 import { useAuth0 } from '@auth0/auth0-react'
 
 export default function Hero({ onButtonClick }) {
-  const { loginWithRedirect } = useAuth0()
+  const { loginWithRedirect, isAuthenticated } = useAuth0()
   const [springs, api] = useSpring(() => ({
     from: { y: -50, opacity: 0 },
     to: { y: 0, opacity: 1 },
     config: { tension: 120, friction: 14 }
   }))
+
+  // Function to scroll to features section
+  const scrollToFeatures = () => {
+    const featuresSection = document.querySelector('.features')
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
+  // Handle Try the Preview button click
+  const handleTryPreview = () => {
+    if (isAuthenticated) {
+      // If logged in, scroll to features
+      scrollToFeatures()
+    } else {
+      // If not logged in, redirect to signup
+      loginWithRedirect({ 
+        authorizationParams: {
+          screen_hint: "signup",
+        }
+      })
+    }
+  }
 
   // Carousel / outfit sets
   const outfitSets = [
@@ -122,15 +145,11 @@ export default function Hero({ onButtonClick }) {
           >
             <motion.button 
               className="btn-primary"
-              onClick={() => loginWithRedirect({ 
-                authorizationParams: {
-                  screen_hint: "signup",
-                }
-              })}
+              onClick={handleTryPreview}
               whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(6, 182, 212, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
-            Try the Preview
+            {isAuthenticated ? 'Try the Preview' : 'Try the Preview'}
             </motion.button>
             <motion.button 
               className="btn-secondary"
