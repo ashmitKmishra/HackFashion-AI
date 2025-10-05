@@ -35,14 +35,14 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUpload, isCategorizing 
   }, []);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
-        <UploadIcon className="w-6 h-6 mr-2 text-indigo-500" />
+    <div className="bg-[#05060a]/80 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-[#00f5d4]/20">
+      <h2 className="text-xl font-semibold text-[#f7f8fb] mb-4 flex items-center">
+        <UploadIcon className="w-6 h-6 mr-2 text-[#00f5d4]" />
         Step 1: Upload Your Clothes
       </h2>
       <div 
         onClick={triggerFileSelect}
-        className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-indigo-500 transition-colors"
+        className="border-2 border-dashed border-[#00f5d4]/30 rounded-lg p-8 text-center cursor-pointer hover:border-[#ff3cac]/50 transition-colors bg-[#0b0f1a]/50"
       >
         <input
           ref={fileInputRef}
@@ -53,23 +53,23 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onUpload, isCategorizing 
           className="hidden"
           disabled={isCategorizing}
         />
-        <UploadIcon className="w-12 h-12 mx-auto text-gray-400" />
-        <p className="mt-2 text-sm text-gray-600">Drag & drop your photos here, or click to select files</p>
-        <p className="text-xs text-gray-500">PNG, JPG, WEBP accepted</p>
+        <UploadIcon className="w-12 h-12 mx-auto text-[#00f5d4]/60" />
+        <p className="mt-2 text-sm text-[#b6c3d9]">Drag & drop your photos here, or click to select files</p>
+        <p className="text-xs text-[#b6c3d9]/60">PNG, JPG, WEBP accepted</p>
       </div>
 
       {previews.length > 0 && (
         <div className="mt-4">
-          <h3 className="text-md font-medium text-gray-700">Selected Images:</h3>
+          <h3 className="text-md font-medium text-[#f7f8fb]">Selected Images:</h3>
           <div className="mt-2 grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
             {previews.map((preview, index) => (
-              <img key={index} src={preview} alt={`preview ${index}`} className="w-24 h-24 object-cover rounded-md shadow-sm" />
+              <img key={index} src={preview} alt={`preview ${index}`} className="w-24 h-24 object-cover rounded-md shadow-sm border border-[#00f5d4]/30" />
             ))}
           </div>
           <button
             onClick={handleUploadClick}
             disabled={isCategorizing || selectedFiles.length === 0}
-            className="mt-6 w-full flex justify-center items-center px-4 py-2 bg-indigo-600 text-white font-semibold rounded-md shadow-sm hover:bg-indigo-700 disabled:bg-indigo-300 disabled:cursor-not-allowed transition-colors"
+            className="mt-6 w-full flex justify-center items-center px-4 py-2 bg-gradient-to-r from-[#ff3cac] to-[#00f5d4] text-white font-semibold rounded-md shadow-lg hover:shadow-[#00f5d4]/50 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
           >
             {isCategorizing ? (
               <>
