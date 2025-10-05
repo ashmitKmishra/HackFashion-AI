@@ -372,6 +372,10 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 160px;
+  white-space: nowrap;
+  display: inline-block;
+  text-align: center;
 }
 
 .btn-primary {
@@ -495,7 +499,13 @@ body {
 @media (max-width: 480px) {
   .hero { padding: 1.25rem; }
   .hero-sub { font-size: 1.05rem; }
-  .btn-primary, .btn-secondary { padding: 0.9rem 1.2rem; font-size: 0.98rem }
+  .btn-primary, .btn-secondary { 
+    padding: 0.9rem 1.5rem; 
+    font-size: 1rem;
+    min-width: 140px;
+    width: 100%;
+    max-width: 280px;
+  }
   .garment-card { width: 110px; padding: 0.8rem }
 }
 
@@ -504,6 +514,146 @@ body {
   padding: 6rem 2rem;
   position: relative;
   background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+}
+
+/* Features Page Styles */
+.features-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+  padding: 3rem 2rem 6rem;
+  position: relative;
+}
+
+.features-page h2 {
+  text-align: center;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 4rem;
+  margin-top: 2rem;
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-pink) 50%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Clickable heading button for Upload Your Wardrobe */
+.upload-heading-button {
+  cursor: pointer;
+  padding: 1.5rem 3rem;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  display: block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.upload-heading-button:hover {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent));
+  border: none;
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.3);
+  /* Override text gradient on hover to make text white */
+  -webkit-text-fill-color: white;
+  background-clip: padding-box;
+}
+
+.features-page .features-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 3rem;
+  padding: 0 1rem;
+}
+
+.features-page .feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 3rem 2.5rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.features-page .feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(124, 58, 237, 0.1) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  border-radius: 24px;
+  pointer-events: none;
+}
+
+.features-page .feature-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(124, 58, 237, 0.4);
+  box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
+}
+
+.features-page .feature-card:hover::before {
+  opacity: 1;
+}
+
+.features-page .feature-icon {
+  font-size: 5rem;
+  margin-bottom: 2rem;
+  display: inline-block;
+  filter: drop-shadow(0 4px 20px rgba(124, 58, 237, 0.4));
+}
+
+.features-page .feature-card h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.features-page .feature-card p {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.features-page .feature-card > div {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+  transform: translateX(-4px);
 }
 
 .section-title {
@@ -519,6 +669,34 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+}
+
+/* iframe overlay styles for embedded feature apps */
+.iframe-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 3rem;
+  z-index: 2000;
+}
+.iframe-header {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.feature-iframe {
+  width: 100%;
+  max-width: 1100px;
+  height: calc(100vh - 160px);
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6);
 }
 
 .feature-card {
@@ -721,6 +899,50 @@ body {
   .features-grid,
   .benefits-grid {
     grid-template-columns: 1fr;
+  }
+
+  .features-page {
+    padding: 2rem 1rem 4rem;
+  }
+
+  .features-page h2 {
+    margin-bottom: 3rem;
+    margin-top: 1rem;
+  }
+
+  .features-page .features-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0;
+  }
+
+  .features-page .feature-card {
+    padding: 2.5rem 2rem;
+  }
+
+  .features-page .feature-card > div {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .features-page .feature-card button {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .back-button {
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .iframe-overlay {
+    padding: 1rem;
+  }
+
+  .feature-iframe {
+    height: calc(100vh - 100px);
   }
 }
 
@@ -960,5 +1182,223 @@ body {
   
   .email-input {
     min-width: 100%;
+  }
+}
+
+/* === UPLOAD WARDROBE PAGE === */
+.upload-wardrobe {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--darker) 0%, var(--dark) 100%);
+  padding: 2rem;
+  position: relative;
+}
+
+.upload-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-top: 4rem;
+}
+
+.upload-title {
+  text-align: center;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent) 50%, var(--accent-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.upload-subtitle {
+  text-align: center;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+  margin-bottom: 3rem;
+}
+
+.upload-dropzone {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 4rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.upload-dropzone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(0, 245, 212, 0.1));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.upload-dropzone:hover {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
+}
+
+.upload-dropzone:hover::before {
+  opacity: 1;
+}
+
+.upload-dropzone.dragging {
+  border-color: var(--accent-pink);
+  background: rgba(255, 60, 172, 0.1);
+  transform: scale(1.02);
+  box-shadow: 0 0 60px rgba(255, 60, 172, 0.4);
+}
+
+.upload-dropzone.dragging::before {
+  opacity: 1;
+  background: linear-gradient(135deg, rgba(255, 60, 172, 0.2), rgba(0, 245, 212, 0.2));
+}
+
+.upload-icon {
+  font-size: 5rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  filter: drop-shadow(0 4px 20px rgba(0, 245, 212, 0.4));
+}
+
+.upload-dropzone h3 {
+  font-size: 1.75rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+.upload-dropzone p {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.upload-formats {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+
+.processing-indicator {
+  margin-top: 1.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent));
+  border-radius: 50px;
+  color: white;
+  font-weight: 600;
+  display: inline-block;
+  position: relative;
+  z-index: 1;
+}
+
+.uploaded-gallery {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.uploaded-gallery h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--accent);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.gallery-item {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover {
+  border-color: var(--accent);
+  box-shadow: 0 8px 24px rgba(0, 245, 212, 0.2);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.remove-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 60, 172, 0.9);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.gallery-item:hover .remove-btn {
+  opacity: 1;
+}
+
+.remove-btn:hover {
+  background: var(--accent-pink);
+  transform: scale(1.1);
+}
+
+.continue-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 1.25rem 3rem;
+  font-size: 1.25rem;
+}
+
+@media (max-width: 768px) {
+  .upload-container {
+    padding-top: 2rem;
+  }
+
+  .upload-dropzone {
+    padding: 3rem 1.5rem;
+  }
+
+  .upload-icon {
+    font-size: 4rem;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 0.75rem;
   }
 }

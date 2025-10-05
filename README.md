@@ -43,6 +43,21 @@ npm run dev
 ```
 Open the printed local URL (usually http://localhost:{port_number}).
 
+Running the wardrobe classifier locally
+- The wardrobe classifier app lives in `Ashar/ai-wardrobe-stylist` and must be started separately for the iframe integration to work during development.
+- From the repo root open a second terminal and run:
+```bash
+cd Ashar/ai-wardrobe-stylist
+npm install
+npm run dev
+# This typically serves on http://localhost:5173
+```
+ - Make sure `Ashar/ai-wardrobe-stylist/.env.local` contains `VITE_GEMINI_API_KEY` or `GEMINI_API_KEY` as required by that app's Vite config (the app maps the env key to `process.env.API_KEY` in the client bundle).
+
+Replacing the iframe with a production URL
+ - In `src/components/FeaturesPage.jsx` and `src/components/FeaturesLauncher.jsx` the iframe default URL is `http://localhost:5173`. Replace that string with your production URL (for example, `https://ai-wardrobe.example.com`) when you deploy the wardrobe classifier app.
+- For secure production usage, avoid embedding API keys client-side. Instead, host a backend that calls the Generative API server-side and returns safe results to the client.
+
 Notes and next steps
 - This front-end is a visual/marketing shell. Core back-end, model pipelines, auth, and storage will be added later.
 - Planned: image upload + storage, Gemini vision/classification, outfit ranking, Gemini chat + ElevenLabs TTS, user auth and wardrobe DB.
