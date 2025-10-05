@@ -1,5 +1,5 @@
 {
-  "name": "AI Wardrobe Stylist",
+  "name": "HackFashion-AI",
   "description": "Automatically categorize your clothing items from photos and get personalized outfit suggestions based on event, weather, mood, height, and body type.",
   "requestFramePermissions": []
 }
