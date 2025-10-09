@@ -50,7 +50,7 @@ HackFashion-AI is an intelligent wardrobe management and styling platform that c
 - **Natural Voice Responses**: AI responds with natural, human-like voice using ElevenLabs Text-to-Speech
 - **Context-Aware Recommendations**: Get outfit suggestions based on event type, weather, and personal style
 
-![Voice Stylist Interface](./docs/screenshots/voice-stylist.png)
+![Voice Stylist Interface](./assets/IMG_1841.PNG)
 *Chat with your AI stylist using voice or text - get personalized outfit recommendations*
 
 ### 👔 **Intelligent Outfit Generation**
@@ -90,7 +90,7 @@ HackFashion-AI is an intelligent wardrobe management and styling platform that c
 
 ![Outfit Recommendations](./assets/Image1.JPG)
 ![Outfit Recommendations](./assets/Image2.JPG)
-![Outfit Recommendations](./assets/IMG_1841.PNG)
+
 *AI-generated outfit with visual item preview and voice narration*
 
 
