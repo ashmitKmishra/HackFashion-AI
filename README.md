@@ -1,85 +1,404 @@
-# HackFashion-AI
-WEBSITE LINK: https://hackfashionai.netlify.app/
-HackFashion-AI is an AI-first wardrobe manager and stylist. This repo currently contains the single-page marketing/welcome site and a UI scaffold for the future core app (image uploads, outfit generation, and conversational styling). The site is designed with a Gen‑Z aesthetic and includes animated preview components to illustrate core product ideas.
+# 🎨 HackFashion-AI
 
-What the app will do
-- Auto-categorize every clothing item from user photos (tops, bottoms, outerwear, accessories)
-- Generate outfit combinations from the user’s wardrobe tailored to event, weather, mood, height and body type
-- Provide a conversational/styling assistant powered by language and voice models (e.g., Gemini + ElevenLabs)
-- Recommend color palettes, fit adjustments and sustainable ways to wear more of what you own
+> **Your AI-Powered Personal Wardrobe Stylist**
 
-Tech stack (current)
-# HackFashion-AI
 
-HackFashion-AI is an AI-powered wardrobe manager and stylist. This repository contains the welcome/marketing website and a UI scaffold for the core app we will build: image uploads, outfit generation, and conversational styling.
 
-Overview
-- Auto-categorize wardrobe items from photos (tops, bottoms, outerwear, accessories).
-- Generate outfit combinations tailored to event, weather, mood, height, and body type.
-- Provide conversational/voice styling using language and TTS models (Gemini + ElevenLabs planned).
+HackFashion-AI is an intelligent wardrobe management and styling platform that combines computer vision, natural language processing, and voice synthesis to revolutionize how you interact with your closet. Upload your clothes, chat with your AI stylist, and get personalized outfit recommendations—all powered by cutting-edge AI technology.
 
-Tech stack
-- Frontend: React 18 + Vite
-- Animations: Framer Motion + react-spring
-- Styling: CSS variables + responsive rules (Tailwind optional)
+![HackFashion-AI Welcome Page](./docs/screenshots/welcome-page.png)
+*Modern, Gen-Z aesthetic welcome page with smooth animations*
 
-Repository structure
-- `index.html` — app entry
-- `src/` — React app
-  - `App.jsx`, `main.jsx` — app bootstrap
-  - `components/` — UI components (Hero, Features, Benefits, CTA, ComingSoon)
-  - `hooks/` — small utilities (`useTheme`, `useUploadPreview`)
-- `server/` — simple server scaffold (uploads, future API)
+---
 
-How to run locally
+## ✨ Features
 
-### Quick Start (Recommended)
-Use the `start-all.sh` script to automatically install dependencies and run both applications:
+### 🖼️ **Smart Wardrobe Management**
+- **AI-Powered Categorization**: Automatically categorize clothing items from photos using Google Gemini Vision API
+- **Visual Gallery**: Beautiful, responsive wardrobe display with category tags
+- **Quick Upload**: Drag-and-drop or click to upload multiple clothing items at once
+
+### 🤖 **Voice Stylist (ElevenLabs Integration)**
+- **Voice Conversations**: Speak to your AI stylist using voice input (Web Speech API)
+- **Natural Voice Responses**: AI responds with natural, human-like voice using ElevenLabs Text-to-Speech
+- **Context-Aware Recommendations**: Get outfit suggestions based on event type, weather, and personal style
+
+![Voice Stylist Interface](./docs/screenshots/voice-stylist.png)
+*Chat with your AI stylist using voice or text - get personalized outfit recommendations*
+
+### 👔 **Intelligent Outfit Generation**
+- **Smart Matching**: AI analyzes your wardrobe and creates cohesive outfit combinations
+- **Visual Previews**: See recommended outfit items with images
+- **Personalized Justifications**: Understand why each outfit works for your occasion
+
+### 🎯 **Event-Based Styling**
+- Get recommendations tailored to:
+  - Event type (casual, formal, business, athletic, etc.)
+  - Weather conditions
+  - Personal preferences
+  - Body type and color preferences
+
+---
+
+## 🛠️ Tech Stack
+
+### **Frontend**
+- **React 18/19** - Modern UI framework
+- **TypeScript** - Type-safe development
+- **Vite** - Lightning-fast build tool and dev server
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
+
+### **Backend**
+- **Node.js + Express** - RESTful API server
+- **Multer** - File upload handling
+- **Axios** - HTTP client for external APIs
+- **dotenv** - Environment variable management
+
+### **AI & APIs**
+- **Google Gemini 2.5 Flash** (`@google/genai` v1.22.0)
+  - Vision API for clothing categorization
+  - Chat API for conversational styling
+  - JSON mode for structured responses
+- **ElevenLabs API** - Premium text-to-speech synthesis
+  - Natural voice narration
+  - Customizable voice models
+- **Web Speech API** - Browser-based speech recognition (free, client-side)
+
+---
+
+## 📁 Repository Structure
+
+```
+HackFashion-AI/
+├── index.html                      # Main landing page entry
+├── package.json                    # Main app dependencies
+├── vite.config.js                  # Main app Vite config
+│
+├── src/                            # Landing page source
+│   ├── App.jsx                     # Main app component
+│   ├── main.jsx                    # React entry point
+│   ├── styles.css                  # Global styles
+│   ├── components/                 # Landing page components
+│   │   ├── Hero.jsx                # Hero section
+│   │   ├── Features.jsx            # Features showcase
+│   │   ├── FeaturesPage.jsx        # Features detail page
+│   │   ├── Benefits.jsx            # Benefits section
+│   │   └── CTA.jsx                 # Call-to-action
+│   └── hooks/                      # Custom React hooks
+│       ├── useTheme.js             # Theme management
+│       └── useUploadPreview.js     # Upload preview logic
+│
+├── server/                         # Backend API server
+│   ├── index.js                    # Express server + API routes
+│   ├── package.json                # Server dependencies
+│   ├── .env                        # Environment variables (DO NOT COMMIT)
+│   └── uploads/                    # Uploaded images storage
+│
+└── Ashar/ai-wardrobe-stylist/     # Wardrobe Stylist App
+    ├── App.tsx                     # Main stylist app
+    ├── vite.config.ts              # Vite config with proxy
+    ├── package.json                # App dependencies
+    ├── components/                 # React components
+    │   ├── VoiceStylist.tsx        # Voice chat interface
+    │   ├── Wardrobe.tsx            # Wardrobe manager
+    │   ├── ImageUploader.tsx       # Image upload UI
+    │   └── OutfitSuggestions.tsx   # Outfit display
+    └── services/
+        └── geminiService.ts        # API service layer
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
+- **API Keys**:
+  - [Google Gemini API Key](https://makersuite.google.com/app/apikey)
+  - [ElevenLabs API Key](https://elevenlabs.io/)
+
+### Installation & Setup
+
+#### **Option 1: Quick Start (Recommended) 🎯**
+
+Use the automated script to install and run everything:
 
 ```bash
+chmod +x start-all.sh
 ./start-all.sh
 ```
 
-This script will:
-- Install dependencies for both the main app and AI Wardrobe Stylist
-- Start the main app (usually on http://localhost:3000 or 3001)
-- Start the AI Wardrobe Stylist (on http://localhost:5173)
-- Press `Ctrl+C` to stop both servers
+This will:
+- Install all dependencies for main app, server, and AI stylist
+- Start the backend server on `http://localhost:4000`
+- Start the main landing page on `http://localhost:3000` (or available port)
+- Start the AI Wardrobe Stylist on `http://localhost:5173`
 
-### Manual Setup
-1. Install Node.js (v18+) and npm.
-2. If project is on macOS Desktop and you get an EPERM uv_cwd error, either:
-   - Grant Terminal access to Desktop: System Settings → Privacy & Security → Files and Folders → allow "Terminal", or
-   - Move the project off Desktop: `mv ~/Desktop/HackFashion-AI ~/Projects/`
-3. From the project root run:
+Press `Ctrl+C` to stop all servers.
+
+---
+
+#### **Option 2: Manual Setup 🔧**
+
+**1. Clone the Repository**
 ```bash
-npm install
-npm run dev
+git clone https://github.com/ashmitKmishra/HackFashion-AI.git
+cd HackFashion-AI
 ```
-Open the printed local URL (usually http://localhost:{port_number}).
 
-Running the wardrobe classifier locally
-- The wardrobe classifier app lives in `Ashar/ai-wardrobe-stylist` and must be started separately for the iframe integration to work during development.
-- **Note:** The `start-all.sh` script automatically handles this. If running manually, open a second terminal and run:
+**2. Set Up Environment Variables**
+
+Create `.env` file in the `server/` directory:
+
 ```bash
+cd server
+cat > .env << EOF
+# Google Gemini API Key
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# ElevenLabs API Configuration
+ELEVENLABS_API_KEY=your_elevenlabs_api_key_here
+ELEVENLABS_VOICE_ID=your_preferred_voice_id
+ELEVENLABS_HOST=https://api.elevenlabs.io
+
+# Server Port
+PORT=4000
+EOF
+```
+
+**3. Install Dependencies**
+
+```bash
+# Install server dependencies
+cd server
+npm install
+
+# Install main app dependencies
+cd ..
+npm install
+
+# Install AI Wardrobe Stylist dependencies
 cd Ashar/ai-wardrobe-stylist
 npm install
-npm run dev
-# This typically serves on http://localhost:5173
+cd ../..
 ```
- - Make sure `Ashar/ai-wardrobe-stylist/.env` contains `GEMINI_API_KEY` as required by that app's Vite config (the app maps the env key to `process.env.API_KEY` in the client bundle).
- - See `Ashar/ai-wardrobe-stylist/.env.example` for the required format.
 
-Replacing the iframe with a production URL
- - In `src/components/FeaturesPage.jsx` and `src/components/FeaturesLauncher.jsx` the iframe default URL is `http://localhost:5173`. Replace that string with your production URL (for example, `https://ai-wardrobe.example.com`) when you deploy the wardrobe classifier app.
-- For secure production usage, avoid embedding API keys client-side. Instead, host a backend that calls the Generative API server-side and returns safe results to the client.
+**4. Start the Applications**
 
-Notes and next steps
-- This front-end is a visual/marketing shell. Core back-end, model pipelines, auth, and storage will be added later.
-- Planned: image upload + storage, Gemini vision/classification, outfit ranking, Gemini chat + ElevenLabs TTS, user auth and wardrobe DB.
+Open **three separate terminals**:
 
-Contributing
-- Open issues or PRs. Tell me which feature to prioritize (upload flow, mock API, or model integration) and I will scaffold it.
+**Terminal 1 - Backend Server:**
+```bash
+cd server
+node index.js
+# Server runs on http://localhost:4000
+```
 
-License
-- MIT
+**Terminal 2 - Main Landing Page:**
+```bash
+npm run dev
+# Typically runs on http://localhost:3000 or 3001
+```
+
+**Terminal 3 - AI Wardrobe Stylist:**
+```bash
+cd Ashar/ai-wardrobe-stylist
+npm run dev
+# Runs on http://localhost:5173
+```
+
+---
+
+### 🔑 API Keys Setup
+
+#### **Google Gemini API**
+1. Visit [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Sign in with your Google account
+3. Click "Get API Key"
+4. Copy your API key to `server/.env` as `GEMINI_API_KEY`
+
+#### **ElevenLabs API**
+1. Visit [ElevenLabs](https://elevenlabs.io/)
+2. Sign up for an account
+3. Navigate to your [Profile Settings](https://elevenlabs.io/app/settings/api-keys)
+4. Generate an API key
+5. Choose a voice from the [Voice Library](https://elevenlabs.io/voice-library) and copy its Voice ID
+6. Add both to `server/.env`:
+   - `ELEVENLABS_API_KEY` - Your API key
+   - `ELEVENLABS_VOICE_ID` - Your chosen voice ID (default: `NDTYOmYEjbDIVCKB35i3`)
+
+---
+
+## 📖 How to Use
+
+### **Upload Your Wardrobe**
+1. Navigate to the Features page
+2. Click "Upload Wardrobe"
+3. Select or drag-drop clothing images (PNG, JPG, WEBP)
+4. AI automatically categorizes each item (T-shirt, Jeans, Hoodie, etc.)
+
+### **Chat with Voice Stylist**
+1. Click "Voice Stylist" from the Features page
+2. Your wardrobe is displayed at the top
+3. **Type** your request OR **Click the microphone** 🎤 to speak
+4. Example prompts:
+   - "Show me outfit for summer casual"
+   - "What should I wear to a business meeting?"
+   - "Give me a comfortable outfit for the gym"
+5. AI responds with:
+   - Text explanation
+   - **Voice narration** (auto-plays via ElevenLabs)
+   - **Visual outfit preview** with matched wardrobe items
+
+![Outfit Recommendations](./docs/screenshots/outfit-recommendations.png)
+*AI-generated outfit with visual item preview and voice narration*
+
+---
+
+## 🏗️ API Endpoints
+
+### Backend Server (`http://localhost:4000`)
+
+| Endpoint | Method | Description | Request Body | Response |
+|----------|--------|-------------|--------------|----------|
+| `/api/health` | GET | Health check & API status | - | `{ status, gemini: bool, elevenlabs: bool }` |
+| `/api/categorize` | POST | Categorize clothing images | `{ images: [{data, mimeType}] }` | `{ items: [{category, description}] }` |
+| `/api/stylist-session` | POST | Get outfit recommendations | `{ prompt, wardrobeSummaries }` | `{ reply: {name, itemDescriptions, justification} }` |
+| `/api/tts` | POST | Generate voice audio | `{ text }` | Audio blob (MP3) |
+
+---
+
+## 🎨 Features Showcase
+
+### **AI Categorization**
+- Powered by **Gemini 2.5 Flash Vision API**
+- Identifies clothing type, color, style, and material
+- Returns structured JSON for easy processing
+
+### **Voice Stylist**
+- **Speech Input**: Web Speech API (browser-based, free)
+- **Voice Output**: ElevenLabs premium TTS
+- **Real-time chat** with context awareness
+- **Visual outfit display** with fuzzy matching algorithm
+
+### **Smart Outfit Matching**
+- Analyzes wardrobe items
+- Considers event type and weather
+- Provides fashion justification
+- Displays matched items with images
+
+---
+
+## 🐛 Troubleshooting
+
+### **Server Error 500 when uploading**
+- Ensure backend server is running: `cd server && node index.js`
+- Check `.env` file exists in `server/` directory
+- Verify `GEMINI_API_KEY` is set correctly
+- Check server logs for detailed error messages
+
+### **No voice output**
+- Verify `ELEVENLABS_API_KEY` is set in `server/.env`
+- Check browser console for TTS errors
+- Ensure audio playback is not blocked by browser
+
+### **Voice input not working**
+- Use Chrome, Edge, or Safari (Web Speech API supported)
+- Grant microphone permissions when prompted
+- Check browser console for speech recognition errors
+
+### **EPERM or uv_cwd errors (macOS)**
+- Grant Terminal access: **System Settings → Privacy & Security → Files and Folders → Terminal**
+- Or move project: `mv ~/Desktop/HackFashion-AI ~/Projects/`
+
+---
+
+## 🚢 Deployment
+
+### **Production Environment Variables**
+Replace development URLs in production:
+- Update iframe URLs in `src/components/FeaturesPage.jsx`
+- Set production API endpoint in Vite proxy config
+- **Never commit `.env` files** - use environment variable managers
+
+### **Recommended Hosting**
+- **Frontend**: Netlify, Vercel, or Cloudflare Pages
+- **Backend**: Railway, Render, or AWS EC2
+- **Storage**: AWS S3 or Cloudinary for uploaded images
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Landing page with Gen-Z aesthetic
+- [x] Image upload and categorization (Gemini Vision)
+- [x] Voice Stylist with ElevenLabs TTS
+- [x] Speech-to-text input (Web Speech API)
+- [x] Visual outfit recommendations
+- [ ] User authentication & accounts
+- [ ] Persistent wardrobe storage (Database)
+- [ ] Weather API integration
+- [ ] Body type and color analysis
+- [ ] Outfit history and favorites
+- [ ] Social sharing features
+- [ ] Mobile app (React Native)
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/AmazingFeature`)
+3. **Commit** your changes (`git commit -m 'Add some AmazingFeature'`)
+4. **Push** to the branch (`git push origin feature/AmazingFeature`)
+5. **Open** a Pull Request
+
+### Priority Features
+- Improved wardrobe categorization accuracy
+- Additional voice models and languages
+- Outfit rating and feedback system
+- Integration with fashion e-commerce APIs
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Authors
+
+**Ashmit Mishra** - [@ashmitKmishra](https://github.com/ashmitKmishra)
+
+---
+
+## 🙏 Acknowledgments
+
+- **Google Gemini** for powerful vision and language AI
+- **ElevenLabs** for natural voice synthesis
+- **Web Speech API** for browser-based speech recognition
+- **React & Vite** community for amazing developer tools
+
+---
+
+## 📞 Support
+
+- 🌐 **Live Demo**: [hackfashionai.netlify.app](https://hackfashionai.netlify.app/)
+- 🐛 **Issues**: [GitHub Issues](https://github.com/ashmitKmishra/HackFashion-AI/issues)
+- 📧 **Email**: Open an issue for contact
+
+---
+
+<div align="center">
+
+**⭐ Star this repo if you find it helpful!**
+
+Made with ❤️ and AI
+
+</div>
