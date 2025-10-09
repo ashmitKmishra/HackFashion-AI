@@ -6,7 +6,7 @@
 
 HackFashion-AI is an intelligent wardrobe management and styling platform that combines computer vision, natural language processing, and voice synthesis to revolutionize how you interact with your closet. Upload your clothes, chat with your AI stylist, and get personalized outfit recommendations—all powered by cutting-edge AI technology.
 
-![HackFashion-AI Welcome Page](./docs/screenshots/welcome-page.png)
+![HackFashion-AI Welcome Page](./assets/Welcome_page.PNG)
 *Modern, Gen-Z aesthetic welcome page with smooth animations*
 
 ---
@@ -253,23 +253,11 @@ npm run dev
    - **Voice narration** (auto-plays via ElevenLabs)
    - **Visual outfit preview** with matched wardrobe items
 
-![Outfit Recommendations](./docs/screenshots/outfit-recommendations.png)
+![Outfit Recommendations](./assets/Image1.JPG)
+![Outfit Recommendations](./assets/Image2.JPG)
+![Outfit Recommendations](./assets/IMG_1841.PNG)
 *AI-generated outfit with visual item preview and voice narration*
 
----
-
-## 🏗️ API Endpoints
-
-### Backend Server (`http://localhost:4000`)
-
-| Endpoint | Method | Description | Request Body | Response |
-|----------|--------|-------------|--------------|----------|
-| `/api/health` | GET | Health check & API status | - | `{ status, gemini: bool, elevenlabs: bool }` |
-| `/api/categorize` | POST | Categorize clothing images | `{ images: [{data, mimeType}] }` | `{ items: [{category, description}] }` |
-| `/api/stylist-session` | POST | Get outfit recommendations | `{ prompt, wardrobeSummaries }` | `{ reply: {name, itemDescriptions, justification} }` |
-| `/api/tts` | POST | Generate voice audio | `{ text }` | Audio blob (MP3) |
-
----
 
 ## 🎨 Features Showcase
 
@@ -372,9 +360,12 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ---
 
-## 👨‍💻 Authors
+## 👨‍💻 Author & Contributers
 
-**Ashmit Mishra** - [@ashmitKmishra](https://github.com/ashmitKmishra)
+**Ashmit Mishra** - [@ashmitKmishra](https://github.com/ashmitKmishra)<br>
+**Ashwani Mishra** - [@ashwani564](https://github.com/Ashwani564)<br>
+**Muhammad Ashar Mian** - [@Muhammadasharmian](https://github.com/Muhammadasharmian) <br>
+**Mohnish Sao** - [@mohnish-dev](https://github.com/mohnish-dev)
 
 ---
 
@@ -389,7 +380,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 📞 Support
 
-- 🌐 **Live Demo**: [hackfashionai.netlify.app](https://hackfashionai.netlify.app/)
 - 🐛 **Issues**: [GitHub Issues](https://github.com/ashmitKmishra/HackFashion-AI/issues)
 - 📧 **Email**: Open an issue for contact
 
@@ -399,6 +389,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **⭐ Star this repo if you find it helpful!**
 
-Made with ❤️ and AI
+Made with ❤️
 
 </div>
