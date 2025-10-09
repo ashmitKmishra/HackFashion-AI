@@ -1,8 +1,35 @@
+
 # 🎨 HackFashion-AI
 
 > **Your AI-Powered Personal Wardrobe Stylist**
 
+---
 
+## 🛠️ Tech Stack
+
+### **Frontend**
+- **React 18/19** - Modern UI framework
+- **TypeScript** - Type-safe development
+- **Vite** - Lightning-fast build tool and dev server
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
+
+### **Backend**
+- **Node.js + Express** - RESTful API server
+- **Multer** - File upload handling
+- **Axios** - HTTP client for external APIs
+- **dotenv** - Environment variable management
+
+### **AI & APIs**
+- **Google Gemini 2.5 Flash** (`@google/genai` v1.22.0)
+  - Vision API for clothing categorization
+  - Chat API for conversational styling
+  - JSON mode for structured responses
+- **ElevenLabs API** - Premium text-to-speech synthesis
+  - Natural voice narration
+  - Customizable voice models
+- **Web Speech API** - Browser-based speech recognition (free, client-side)
+---
 
 HackFashion-AI is an intelligent wardrobe management and styling platform that combines computer vision, natural language processing, and voice synthesis to revolutionize how you interact with your closet. Upload your clothes, chat with your AI stylist, and get personalized outfit recommendations—all powered by cutting-edge AI technology.
 
@@ -38,32 +65,53 @@ HackFashion-AI is an intelligent wardrobe management and styling platform that c
   - Personal preferences
   - Body type and color preferences
 
+
 ---
+## 📖 How to Use
 
-## 🛠️ Tech Stack
+### **Upload Your Wardrobe**
+1. Navigate to the Features page
+2. Click "Upload Wardrobe"
+3. Select or drag-drop clothing images (PNG, JPG, WEBP)
+4. AI automatically categorizes each item (T-shirt, Jeans, Hoodie, etc.)
 
-### **Frontend**
-- **React 18/19** - Modern UI framework
-- **TypeScript** - Type-safe development
-- **Vite** - Lightning-fast build tool and dev server
-- **Tailwind CSS** - Utility-first styling
-- **Framer Motion** - Smooth animations
+### **Chat with Voice Stylist**
+1. Click "Voice Stylist" from the Features page
+2. Your wardrobe is displayed at the top
+3. **Type** your request OR **Click the microphone** 🎤 to speak
+4. Example prompts:
+   - "Show me outfit for summer casual"
+   - "What should I wear to a business meeting?"
+   - "Give me a comfortable outfit for the gym"
+5. AI responds with:
+   - Text explanation
+   - **Voice narration** (auto-plays via ElevenLabs)
+   - **Visual outfit preview** with matched wardrobe items
 
-### **Backend**
-- **Node.js + Express** - RESTful API server
-- **Multer** - File upload handling
-- **Axios** - HTTP client for external APIs
-- **dotenv** - Environment variable management
+![Outfit Recommendations](./assets/Image1.JPG)
+![Outfit Recommendations](./assets/Image2.JPG)
+![Outfit Recommendations](./assets/IMG_1841.PNG)
+*AI-generated outfit with visual item preview and voice narration*
 
-### **AI & APIs**
-- **Google Gemini 2.5 Flash** (`@google/genai` v1.22.0)
-  - Vision API for clothing categorization
-  - Chat API for conversational styling
-  - JSON mode for structured responses
-- **ElevenLabs API** - Premium text-to-speech synthesis
-  - Natural voice narration
-  - Customizable voice models
-- **Web Speech API** - Browser-based speech recognition (free, client-side)
+
+## 🎨 Features Showcase
+
+### **AI Categorization**
+- Powered by **Gemini 2.5 Flash Vision API**
+- Identifies clothing type, color, style, and material
+- Returns structured JSON for easy processing
+
+### **Voice Stylist**
+- **Speech Input**: Web Speech API (browser-based, free)
+- **Voice Output**: ElevenLabs premium TTS
+- **Real-time chat** with context awareness
+- **Visual outfit display** with fuzzy matching algorithm
+
+### **Smart Outfit Matching**
+- Analyzes wardrobe items
+- Considers event type and weather
+- Provides fashion justification
+- Displays matched items with images
 
 ---
 
@@ -232,53 +280,7 @@ npm run dev
 
 ---
 
-## 📖 How to Use
 
-### **Upload Your Wardrobe**
-1. Navigate to the Features page
-2. Click "Upload Wardrobe"
-3. Select or drag-drop clothing images (PNG, JPG, WEBP)
-4. AI automatically categorizes each item (T-shirt, Jeans, Hoodie, etc.)
-
-### **Chat with Voice Stylist**
-1. Click "Voice Stylist" from the Features page
-2. Your wardrobe is displayed at the top
-3. **Type** your request OR **Click the microphone** 🎤 to speak
-4. Example prompts:
-   - "Show me outfit for summer casual"
-   - "What should I wear to a business meeting?"
-   - "Give me a comfortable outfit for the gym"
-5. AI responds with:
-   - Text explanation
-   - **Voice narration** (auto-plays via ElevenLabs)
-   - **Visual outfit preview** with matched wardrobe items
-
-![Outfit Recommendations](./assets/Image1.JPG)
-![Outfit Recommendations](./assets/Image2.JPG)
-![Outfit Recommendations](./assets/IMG_1841.PNG)
-*AI-generated outfit with visual item preview and voice narration*
-
-
-## 🎨 Features Showcase
-
-### **AI Categorization**
-- Powered by **Gemini 2.5 Flash Vision API**
-- Identifies clothing type, color, style, and material
-- Returns structured JSON for easy processing
-
-### **Voice Stylist**
-- **Speech Input**: Web Speech API (browser-based, free)
-- **Voice Output**: ElevenLabs premium TTS
-- **Real-time chat** with context awareness
-- **Visual outfit display** with fuzzy matching algorithm
-
-### **Smart Outfit Matching**
-- Analyzes wardrobe items
-- Considers event type and weather
-- Provides fashion justification
-- Displays matched items with images
-
----
 
 ## 🐛 Troubleshooting
 
